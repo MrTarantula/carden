@@ -1,182 +1,55 @@
-# boxen [![Build Status](https://travis-ci.org/sindresorhus/boxen.svg?branch=master)](https://travis-ci.org/sindresorhus/boxen)
+# carden [![Build Status](https://travis-ci.org/mrtarantula/carden.svg?branch=master)](https://travis-ci.org/mrtarantula/carden)
 
-> Create boxes in the terminal
+> Create cards in the terminal. Forked from [sindresorhus/boxen](https://github.com/sindresorhus/boxen). The only difference between the two packages is that the header background and border color are configurable independent of the content background or border color.
 
-![](screenshot.png)
-
+![screenshot](screenshot.png)
 
 ## Install
 
+```bash
+npm install carden
 ```
-$ npm install boxen
-```
-
-<a href="https://www.patreon.com/sindresorhus">
-	<img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" width="160">
-</a>
-
-
-## Usage
-
-```js
-const boxen = require('boxen');
-
-console.log(boxen('unicorn', {padding: 1}));
-/*
-┌─────────────┐
-│             │
-│   unicorn   │
-│             │
-└─────────────┘
-*/
-
-console.log(boxen('unicorn', {padding: 1, margin: 1, borderStyle: 'double'}));
-/*
-
-   ╔═════════════╗
-   ║             ║
-   ║   unicorn   ║
-   ║             ║
-   ╚═════════════╝
-
-*/
-```
-
 
 ## API
 
-### boxen(input, [options])
+### carden(header, content, [options])
 
-#### input
+#### header
 
 Type: `string`
 
-Text inside the box.
+Text inside the header area.
+
+#### content
+
+Type: `string`
+
+Text inside the content area.
 
 #### options
 
 Type: `Object`
 
-##### borderColor
+Options are the same as [sindresorhus/boxen](https://github.com/sindresorhus/boxen#options) but with the following additions:
+
+##### headerBorderColor
 
 Type: `string`<br>
 Values: `black` `red` `green` `yellow` `blue` `magenta` `cyan` `white` `gray` or a hex value like `#ff0000`
 
-Color of the box border.
+Color of the header border. If not specified `borderColor` is used.
 
-##### borderStyle
-
-Type: `string` `object`<br>
-Default: `single`<br>
-Values:
-- `single`
-```
-┌───┐
-│foo│
-└───┘
-```
-- `double`
-```
-╔═══╗
-║foo║
-╚═══╝
-```
-- `round` (`single` sides with round corners)
-```
-╭───╮
-│foo│
-╰───╯
-```
-- `single-double` (`single` on top and bottom, `double` on right and left)
-```
-╓───╖
-║foo║
-╙───╜
-```
-- `double-single` (`double` on top and bottom, `single` on right and left)
-```
-╒═══╕
-│foo│
-╘═══╛
-```
-- `classic`
-```
-+---+
-|foo|
-+---+
-```
-
-Style of the box border.
-
-Can be any of the above predefined styles or an object with the following keys:
-
-```js
-{
-	topLeft: '+',
-	topRight: '+',
-	bottomLeft: '+',
-	bottomRight: '+',
-	horizontal: '-',
-	vertical: '|'
-}
-```
-
-##### dimBorder
-
-Type: `boolean`<br>
-Default: `false`
-
-Reduce opacity of the border.
-
-##### padding
-
-Type: `number` `Object`<br>
-Default: `0`
-
-Space between the text and box border.
-
-Accepts a number or an object with any of the `top`, `right`, `bottom`, `left` properties. When a number is specified, the left/right padding is 3 times the top/bottom to make it look nice.
-
-##### margin
-
-Type: `number` `Object`<br>
-Default: `0`
-
-Space around the box.
-
-Accepts a number or an object with any of the `top`, `right`, `bottom`, `left` properties. When a number is specified, the left/right margin is 3 times the top/bottom to make it look nice.
-
-##### float
-
-Type: `string`<br>
-Values: `right` `center` `left`<br>
-Default: `left`
-
-Float the box on the available terminal screen space.
-
-##### backgroundColor
+##### headerBackgroundColor
 
 Type: `string`
 Values: `black` `red` `green` `yellow` `blue` `magenta` `cyan` `white` `gray` or a hex value like `#ff0000`
 
-Color of the background.
+Color of the header background. If not specified, `backgroundColor` is used.
 
-##### align
+##### headerAlign
 
 Type: `string`<br>
 Default: `left`<br>
 Values: `left` `center` `right`
 
-Align the text in the box based on the widest line.
-
-
-## Related
-
-- [boxen-cli](https://github.com/sindresorhus/boxen-cli) - CLI for this module
-- [cli-boxes](https://github.com/sindresorhus/cli-boxes) - Boxes for use in the terminal
-- [ink-box](https://github.com/sindresorhus/ink-box) - Box component for Ink that uses this package
-
-
-## License
-
-MIT © [Sindre Sorhus](https://sindresorhus.com)
+Align the text in the header based on the widest line of the header. If not specified, `align` property is used.

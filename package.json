@@ -1,13 +1,13 @@
 {
-	"name": "boxen",
-	"version": "2.1.0",
-	"description": "Create boxes in the terminal",
+	"name": "carden",
+	"version": "1.0.0",
+	"description": "Create cards in the terminal",
 	"license": "MIT",
-	"repository": "sindresorhus/boxen",
+	"repository": "mrtarantula/carden",
 	"author": {
-		"name": "Sindre Sorhus",
-		"email": "sindresorhus@gmail.com",
-		"url": "sindresorhus.com"
+		"name": "Ryan Tauriainen",
+		"email": "ryan@ryant.io",
+		"url": "https://ryant.io"
 	},
 	"engines": {
 		"node": ">=6"
@@ -28,7 +28,10 @@
 		"ascii",
 		"unicode",
 		"border",
-		"text"
+		"text",
+		"card",
+		"cards",
+		"boxen"
 	],
 	"dependencies": {
 		"ansi-align": "^3.0.0",
@@ -41,7 +44,7 @@
 	},
 	"devDependencies": {
 		"ava": "^1.0.1",
-		"nyc": "^13.0.1",
+		"nyc": "^13.1.0",
 		"xo": "^0.23.0"
 	}
 }
