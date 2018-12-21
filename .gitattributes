@@ -1,1 +1,7 @@
 * text=auto eol=lf
+
+# Avoid binary files to be corrupted by CRLF conversion
+*.png binary
+*.gif binary
+*.jpg binary
+*.jpeg binary
