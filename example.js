@@ -2,45 +2,60 @@
 const chalk = require('chalk');
 const carden = require('.');
 
-console.log('\n\n' + carden('header', chalk.blue.bold('unicorn'), {
-	padding: 1,
-	margin: 1,
-	borderColor: 'yellow'
-}) + '\n');
+console.log(carden('Chidi',
+	'You put the Peeps in the chili \npot and it makes it taste bad.', {
+		header: {
+			backgroundColor: 'blue'
+		}
+	}));
 
-console.log('\n\n' + carden('header', chalk.blue.bold('unicorn'), {
-	padding: 1,
-	margin: 1,
-	borderColor: 'yellow',
-	borderStyle: 'double'
-}) + '\n');
+console.log(carden('Tahani',
+	`It's not about who you know. Enlightenment comes from within.
 
-console.log('\n\n' + carden('header', chalk.blue.bold('unicorn'), {
-	padding: 1,
-	margin: 1,
-	borderColor: '#eebbaa',
-	borderStyle: 'double'
-}) + '\n');
+The Dalai Lama texted me that.`, {
+		margin: 2,
+		header: {
+			backgroundColor: 'blue',
+			padding: 1
+		},
+		content: {
+			borderStyle: 'classic',
+			borderColor: 'yellow'
+		}
+	}));
 
-console.log('\n\n' + carden('header', chalk.blue.bold('unicorn'), {
-	padding: 1,
-	margin: 1,
-	borderColor: '#ffc0cb',
-	backgroundColor: '#00ffff',
-	borderStyle: 'double'
-}) + '\n');
+console.log(carden('Eleanor',
+	`That Eleanor is a better Eleanor than this one. And
+that is not easy for me to say.
 
-console.log('\n\n' + carden('header', chalk.blue.bold('unicorn'), {
-	padding: 1,
-	margin: 1,
-	borderColor: 'yellow',
-	backgroundColor: 'magenta',
-	borderStyle: {
-		topLeft: '+',
-		topRight: '+',
-		bottomLeft: '+',
-		bottomRight: '+',
-		horizontal: '-',
-		vertical: '|'
-	}
-}) + '\n');
+"You're not better than me" was my yearbook quote.`, {
+		borderStyle: 'double',
+		borderColor: 'green',
+		header: {
+			backgroundColor: 'blue',
+			padding: 1
+		}
+	}));
+
+console.log(carden('Jason',
+	chalk.black(`I always trust dudes in bow ties. Once, this guy
+in a bow tie came up to me at the gun range in a
+Jacksonville bus station and said he'd give me
+$600 if I put these weird turtles in my duffle
+bag and brought them to Daytona Beach.
+
+So I hotwired a swamp boat to Daytona and the guy
+paid me the $600. My point is, you always trust
+dudes in bow ties.`), {
+		padding: 1,
+		header: {
+			backgroundColor: 'blue',
+			borderStyle: 'classic',
+			borderColor: 'cyan'
+		},
+		content: {
+			backgroundColor: 'white',
+			borderStyle: 'round',
+			borderColor: 'yellow'
+		}
+	}));

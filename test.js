@@ -350,12 +350,50 @@ ${dimBottomBorder}
 test('header align option `center`', t => {
 	const beautifulColor = chalk.magenta('B E A U T I F U L');
 	compare(t, m('foo\nmonkey', `Boxes are\n${beautifulColor}\nand beneficial too!`, {
-		align: 'center',
+		header: {
+			align: 'center'
+		},
 		padding: 1
 	}), `
 ┌─────────────────────────┐
 │                         │
 │    foo                  │
+│   monkey                │
+│                         │
+│                         │
+│   Boxes are             │
+│   ${beautifulColor}     │
+│   and beneficial too!   │
+│                         │
+└─────────────────────────┘
+	`);
+});
+
+test('header align option `right`', t => {
+	const beautifulColor = chalk.magenta('B E A U T I F U L');
+	compare(t, m('foo\nmonkey', `Boxes are\n${beautifulColor}\nand beneficial too!`, {
+		header:
+		{align: 'right'}
+	}), `
+┌───────────────────┐
+│   foo             │
+│monkey             │
+│Boxes are          │
+│${beautifulColor}  │
+│and beneficial too!│
+└───────────────────┘
+	`);
+});
+
+test('content align option `center`', t => {
+	const beautifulColor = chalk.magenta('B E A U T I F U L');
+	compare(t, m('foo\nmonkey', `Boxes are\n${beautifulColor}\nand beneficial too!`, {
+		content: {align: 'center'},
+		padding: 1
+	}), `
+┌─────────────────────────┐
+│                         │
+│   foo                   │
 │   monkey                │
 │                         │
 │                         │
@@ -367,13 +405,13 @@ test('header align option `center`', t => {
 	`);
 });
 
-test('header align option `right`', t => {
+test('content align option `right`', t => {
 	const beautifulColor = chalk.magenta('B E A U T I F U L');
 	compare(t, m('foo\nmonkey', `Boxes are\n${beautifulColor}\nand beneficial too!`, {
-		align: 'right'
+		content: {align: 'right'}
 	}), `
 ┌───────────────────┐
-│   foo             │
+│foo                │
 │monkey             │
 │          Boxes are│
 │  ${beautifulColor}│
@@ -397,9 +435,11 @@ test('header wider than content', t => {
 	`);
 });
 
-test('headerBackgroundColor option', t => {
+test('header backgroundColor option', t => {
 	const box = m('foo', 'foo', {
-		headerBackgroundColor: 'red'
+		header: {
+			backgroundColor: 'red'
+		}
 	});
 	const redAnsiOpen = '\u001B[41m';
 	const redAnsiClose = '\u001B[49m';
@@ -407,9 +447,11 @@ test('headerBackgroundColor option', t => {
 	t.true(box.includes(redAnsiClose));
 });
 
-test('headerBackgroundColor hex', t => {
+test('header backgroundColor hex', t => {
 	const box = m('foo', 'foo', {
-		headerBackgroundColor: '#FF0000'
+		header: {
+			backgroundColor: '#FF0000'
+		}
 	});
 	const rgbAnsiOpen = '\u001B[48;2;255;0;0m';
 	const colorAnsiClose = '\u001B[49m';
@@ -417,10 +459,96 @@ test('headerBackgroundColor hex', t => {
 	t.true(box.includes(colorAnsiClose));
 });
 
-test('throws on unexpected headerBorderColor', t => {
-	t.throws(() => m('foo', 'foo', {headerBorderColor: 'greasy-white'}), /headerBorderColor/);
+test('header borderColor option', t => {
+	const box = m('foo', 'foo', {header: {borderColor: 'yellow'}});
+	const yellowAnsiOpen = '\u001B[33m';
+	const colorAnsiClose = '\u001B[39m';
+	t.true(box.includes(yellowAnsiOpen));
+	t.true(box.includes(colorAnsiClose));
 });
 
-test('throws on unexpected headerBackgroundColor', t => {
-	t.throws(() => m('foo', 'foo', {headerBackgroundColor: 'dark-yellow'}), /headerBackgroundColor/);
+test('header borderColor hex', t => {
+	const box = m('foo', 'foo', {header: {borderColor: '#FF0000'}});
+	const rgbAnsiOpen = '\u001B[38;2;255;0;0m';
+	const colorAnsiClose = '\u001B[39m';
+	t.true(box.includes(rgbAnsiOpen));
+	t.true(box.includes(colorAnsiClose));
+});
+
+test('header dimBorder option', t => {
+	const dimTopBorder = chalk.dim('┌───┐');
+	const dimSide = chalk.dim('│');
+	compare(t, m('foo', 'foo', {header: {dimBorder: true}}), `
+${dimTopBorder}
+${dimSide}foo${dimSide}
+│foo│
+└───┘
+	`);
+});
+
+test('throws on unexpected header borderColor', t => {
+	t.throws(() => m('foo', 'foo', {header: {borderColor: 'greasy-white'}}), /borderColor/);
+});
+
+test('throws on unexpected header backgroundColor', t => {
+	t.throws(() => m('foo', 'foo', {header: {backgroundColor: 'dark-yellow'}}), /backgroundColor/);
+});
+
+test('content backgroundColor option', t => {
+	const box = m('foo', 'foo', {
+		content: {
+			backgroundColor: 'red'
+		}
+	});
+	const redAnsiOpen = '\u001B[41m';
+	const redAnsiClose = '\u001B[49m';
+	t.true(box.includes(redAnsiOpen));
+	t.true(box.includes(redAnsiClose));
+});
+
+test('content backgroundColor hex', t => {
+	const box = m('foo', 'foo', {
+		content: {
+			backgroundColor: '#FF0000'
+		}
+	});
+	const rgbAnsiOpen = '\u001B[48;2;255;0;0m';
+	const colorAnsiClose = '\u001B[49m';
+	t.true(box.includes(rgbAnsiOpen));
+	t.true(box.includes(colorAnsiClose));
+});
+
+test('content dimBorder option', t => {
+	const dimSide = chalk.dim('│');
+	const dimBottomBorder = chalk.dim('└───┘');
+	compare(t, m('foo', 'foo', {content: {dimBorder: true}}), `
+┌───┐
+│foo│
+${dimSide}foo${dimSide}
+${dimBottomBorder}
+	`);
+});
+
+test('content borderColor option', t => {
+	const box = m('foo', 'foo', {content: {borderColor: 'yellow'}});
+	const yellowAnsiOpen = '\u001B[33m';
+	const colorAnsiClose = '\u001B[39m';
+	t.true(box.includes(yellowAnsiOpen));
+	t.true(box.includes(colorAnsiClose));
+});
+
+test('content borderColor hex', t => {
+	const box = m('foo', 'foo', {content: {borderColor: '#FF0000'}});
+	const rgbAnsiOpen = '\u001B[38;2;255;0;0m';
+	const colorAnsiClose = '\u001B[39m';
+	t.true(box.includes(rgbAnsiOpen));
+	t.true(box.includes(colorAnsiClose));
+});
+
+test('throws on unexpected content borderColor', t => {
+	t.throws(() => m('foo', 'foo', {content: {borderColor: 'greasy-white'}}), /borderColor/);
+});
+
+test('throws on unexpected content backgroundColor', t => {
+	t.throws(() => m('foo', 'foo', {content: {backgroundColor: 'dark-yellow'}}), /backgroundColor/);
 });

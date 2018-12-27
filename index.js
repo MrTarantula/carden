@@ -74,41 +74,103 @@ module.exports = (headerText, text, opts) => {
 		float: 'left'
 	}, opts);
 
-	if (opts.headerBorderColor && !isColorValid(opts.headerBorderColor)) {
-		throw new Error(`${opts.headerBorderColor} is not a valid headerBorderColor`);
-	}
-
 	if (opts.borderColor && !isColorValid(opts.borderColor)) {
 		throw new Error(`${opts.borderColor} is not a valid borderColor`);
-	}
-
-	if (opts.headerBackgroundColor && !isColorValid(opts.headerBackgroundColor)) {
-		throw new Error(`${opts.headerBackgroundColor} is not a valid headerBackgroundColor`);
 	}
 
 	if (opts.backgroundColor && !isColorValid(opts.backgroundColor)) {
 		throw new Error(`${opts.backgroundColor} is not a valid backgroundColor`);
 	}
 
-	const chars = getBorderChars(opts.borderStyle);
-	const padding = getObject(opts.padding);
+	if (opts.header && opts.header.borderColor && !isColorValid(opts.header.borderColor)) {
+		throw new Error(`${opts.header.borderColor} is not a valid borderColor`);
+	}
+
+	if (opts.content && opts.content.borderColor && !isColorValid(opts.content.borderColor)) {
+		throw new Error(`${opts.content.borderColor} is not a valid borderColor`);
+	}
+
+	if (opts.header && opts.header.backgroundColor && !isColorValid(opts.header.backgroundColor)) {
+		throw new Error(`${opts.header.backgroundColor} is not a valid backgroundColor`);
+	}
+
+	if (opts.content && opts.content.backgroundColor && !isColorValid(opts.content.backgroundColor)) {
+		throw new Error(`${opts.content.backgroundColor} is not a valid backgroundColor`);
+	}
+
 	const margin = getObject(opts.margin);
+	const contentChars = getBorderChars(opts.content ? opts.content.borderStyle || opts.borderStyle : opts.borderStyle);
+	const contentPadding = getObject(opts.content ? opts.content.padding || opts.padding : opts.padding);
+	const headerChars = getBorderChars(opts.header ? opts.header.borderStyle || opts.borderStyle : opts.borderStyle);
+	const headerPadding = getObject(opts.header ? opts.header.padding || opts.padding : opts.padding);
 
 	const colorizeHeaderBorder = x => {
-		const ret = opts.headerBorderColor ? getColorFn(opts.headerBorderColor || opts.borderColor)(x) : x;
-		return opts.dimBorder ? chalk.dim(ret) : ret;
+		let ret;
+		if (opts.header && opts.header.borderColor) {
+			ret = getColorFn(opts.header.borderColor)(x);
+		} else if (opts.borderColor) {
+			ret = getColorFn(opts.borderColor)(x);
+		} else {
+			ret = x;
+		}
+
+		return opts.header ? opts.header.dimBorder ? chalk.dim(ret) : ret : opts.dimBorder ? chalk.dim(ret) : ret;
 	};
 
 	const colorizeBorder = x => {
-		const ret = opts.borderColor ? getColorFn(opts.borderColor)(x) : x;
-		return opts.dimBorder ? chalk.dim(ret) : ret;
+		let ret;
+		if (opts.content && opts.content.borderColor) {
+			ret = getColorFn(opts.content.borderColor)(x);
+		} else if (opts.borderColor) {
+			ret = getColorFn(opts.borderColor)(x);
+		} else {
+			ret = x;
+		}
+
+		return opts.content ? opts.content.dimBorder ? chalk.dim(ret) : ret : opts.dimBorder ? chalk.dim(ret) : ret;
 	};
 
-	const colorizeHeaderContent = x => opts.headerBackgroundColor ? getBGColorFn(opts.headerBackgroundColor || opts.backgroundColor)(x) : x;
-	const colorizeContent = x => opts.backgroundColor ? getBGColorFn(opts.backgroundColor)(x) : x;
+	const colorizeHeader = x => {
+		if (opts.header && opts.header.backgroundColor) {
+			return getBGColorFn(opts.header.backgroundColor)(x);
+		}
 
-	headerText = ansiAlign(headerText, {align: opts.headerAlign || opts.align});
-	text = ansiAlign(text, {align: opts.align});
+		if (opts.backgroundColor) {
+			return getBGColorFn(opts.backgroundColor)(x);
+		}
+
+		return x;
+	};
+
+	const colorizeContent = x => {
+		if (opts.content && opts.content.backgroundColor) {
+			return getBGColorFn(opts.content.backgroundColor)(x);
+		}
+
+		if (opts.backgroundColor) {
+			return getBGColorFn(opts.backgroundColor)(x);
+		}
+
+		return x;
+	};
+
+	let headerAlign;
+	if (opts.header && opts.header.align) {
+		headerAlign = opts.header.align;
+	} else {
+		headerAlign = opts.align;
+	}
+
+	headerText = ansiAlign(headerText, {align: headerAlign});
+
+	let contentAlign;
+	if (opts.content && opts.content.align) {
+		contentAlign = opts.content.align;
+	} else {
+		contentAlign = opts.align;
+	}
+
+	text = ansiAlign(text, {align: contentAlign});
 
 	const NL = '\n';
 	const PAD = ' ';
@@ -116,43 +178,50 @@ module.exports = (headerText, text, opts) => {
 	let headerLines = headerText.split(NL);
 	let lines = text.split(NL);
 
-	if (padding.top > 0) {
-		headerLines = new Array(padding.top).fill('').concat(headerLines);
-		lines = new Array(padding.top).fill('').concat(lines);
+	if (contentPadding.top > 0) {
+		lines = new Array(contentPadding.top).fill('').concat(lines);
 	}
 
-	if (padding.bottom > 0) {
-		headerLines = headerLines.concat(new Array(padding.bottom).fill(''));
-		lines = lines.concat(new Array(padding.bottom).fill(''));
+	if (headerPadding.top > 0) {
+		headerLines = new Array(headerPadding.top).fill('').concat(headerLines);
 	}
 
-	const contentWidth = (widestLine(text) >= widestLine(headerText) ? widestLine(text) : widestLine(headerText)) + padding.left + padding.right;
-	const paddingLeft = PAD.repeat(padding.left);
+	if (contentPadding.bottom > 0) {
+		lines = lines.concat(new Array(contentPadding.bottom).fill(''));
+	}
+
+	if (headerPadding.bottom > 0) {
+		headerLines = headerLines.concat(new Array(headerPadding.bottom).fill(''));
+	}
+
 	const {columns} = termSize();
+	const contentWidth = widestLine(text) + contentPadding.left + contentPadding.right;
+	const headerWidth = widestLine(headerText) + headerPadding.left + headerPadding.right;
+	const widestWidth = contentWidth > headerWidth ? contentWidth : headerWidth;
+
 	let marginLeft = PAD.repeat(margin.left);
 
 	if (opts.float === 'center') {
-		const padWidth = Math.max((columns - contentWidth) / 2, 0);
+		const padWidth = Math.max((columns - widestWidth) / 2, 0);
 		marginLeft = PAD.repeat(padWidth);
 	} else if (opts.float === 'right') {
-		const padWidth = Math.max(columns - contentWidth - margin.right - 2, 0);
+		const padWidth = Math.max(columns - widestWidth - margin.right - 2, 0);
 		marginLeft = PAD.repeat(padWidth);
 	}
 
-	const horizontal = chars.horizontal.repeat(contentWidth);
-	const top = colorizeHeaderBorder(NL.repeat(margin.top) + marginLeft + chars.topLeft + horizontal + chars.topRight);
-	const bottom = colorizeBorder(marginLeft + chars.bottomLeft + horizontal + chars.bottomRight + NL.repeat(margin.bottom));
-	const headerSide = colorizeHeaderBorder(chars.vertical);
-	const side = colorizeBorder(chars.vertical);
+	const top = colorizeHeaderBorder(NL.repeat(margin.top) + marginLeft + headerChars.topLeft + headerChars.horizontal.repeat(widestWidth) + headerChars.topRight);
+	const bottom = colorizeBorder(marginLeft + contentChars.bottomLeft + contentChars.horizontal.repeat(widestWidth) + contentChars.bottomRight + NL.repeat(margin.bottom));
+	const headerSide = colorizeHeaderBorder(headerChars.vertical);
+	const side = colorizeBorder(contentChars.vertical);
 
 	const headerMiddle = headerLines.map(line => {
-		const paddingRight = PAD.repeat(contentWidth - stringWidth(line) - padding.left);
-		return marginLeft + headerSide + colorizeHeaderContent(paddingLeft + line + paddingRight) + headerSide;
+		const paddingRight = PAD.repeat(widestWidth - stringWidth(line) - headerPadding.left);
+		return marginLeft + headerSide + colorizeHeader(PAD.repeat(headerPadding.left) + line + paddingRight) + headerSide;
 	}).join(NL);
 
 	const middle = lines.map(line => {
-		const paddingRight = PAD.repeat(contentWidth - stringWidth(line) - padding.left);
-		return marginLeft + side + colorizeContent(paddingLeft + line + paddingRight) + side;
+		const paddingRight = PAD.repeat(widestWidth - stringWidth(line) - contentPadding.left);
+		return marginLeft + side + colorizeContent(PAD.repeat(contentPadding.left) + line + paddingRight) + side;
 	}).join(NL);
 
 	return top + NL + headerMiddle + NL + middle + NL + bottom;
