@@ -111,3 +111,60 @@ dudes in bow ties.`), {
 ```
 
 ![Jason card](media/jason.png)
+
+## Borders
+
+Borders are the same as [sindresorhus/cli-boxes], with two additions (subtractions?): 
+
+* `blank` - replaces border characters with spaces, so the card lines up with cards that have borders
+
+* `none` - border is completely removed, no characters in its place
+
+```js
+// single
+console.log(carden('Janet',
+  `Is it an error to act unpredictably and behave in
+ways that run counter to how you were programmed
+to behave?`, {
+  borderStyle: 'single',
+  padding: 1,
+  header: {
+    backgroundColor: 'green'
+  },
+  content: {
+    backgroundColor: 'blue'
+  }
+}));
+
+// blank
+console.log(carden('Janet',
+  `Is it an error to act unpredictably and behave in
+ways that run counter to how you were programmed
+to behave?`, {
+  borderStyle: 'blank',
+  padding: 1,
+  header: {
+    backgroundColor: 'green'
+ },
+  content: {
+    backgroundColor: 'blue'
+  }
+}));
+
+// none
+console.log(carden('Janet',
+  `Is it an error to act unpredictably and behave in
+ways that run counter to how you were programmed
+to behave?`, {
+  borderStyle: 'none',
+  padding: 1,
+  header: {
+    backgroundColor: 'green'
+  },
+  content: {
+    backgroundColor: 'blue'
+  }
+}));
+```
+
+![Janet](media/janet.png)

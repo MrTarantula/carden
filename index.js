@@ -41,7 +41,25 @@ const getBorderChars = borderStyle => {
 
 	let chars;
 
-	if (typeof borderStyle === 'string') {
+	if (borderStyle === 'none') {
+		chars = {
+			topLeft: '',
+			topRight: '',
+			bottomLeft: '',
+			bottomRight: '',
+			horizontal: '',
+			vertical: ''
+		};
+	} else if (borderStyle === 'blank') {
+		chars = {
+			topLeft: ' ',
+			topRight: ' ',
+			bottomLeft: ' ',
+			bottomRight: ' ',
+			horizontal: ' ',
+			vertical: ' '
+		};
+	} else if (typeof borderStyle === 'string') {
 		chars = cliBoxes[borderStyle];
 
 		if (!chars) {

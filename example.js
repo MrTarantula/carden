@@ -59,3 +59,48 @@ dudes in bow ties.`), {
 			borderColor: 'yellow'
 		}
 	}));
+
+console.log(carden('Janet',
+	`Is it an error to act unpredictably and behave in 
+ways that run counter to how you were programmed
+to behave?`, {
+		margin: 1,
+		borderStyle: 'single',
+		padding: 1,
+		header: {
+			backgroundColor: 'green'
+		},
+		content: {
+			backgroundColor: 'blue'
+		}
+	}));
+
+console.log(carden('Janet',
+	`Is it an error to act unpredictably and behave in 
+ways that run counter to how you were programmed
+to behave?`, {
+		margin: 1,
+		borderStyle: 'blank',
+		padding: 1,
+		header: {
+			backgroundColor: 'green'
+		},
+		content: {
+			backgroundColor: 'blue'
+		}
+	}));
+
+console.log(carden('Janet',
+	`Is it an error to act unpredictably and behave in 
+ways that run counter to how you were programmed
+to behave?`, {
+		margin: 1,
+		borderStyle: 'none',
+		padding: 1,
+		header: {
+			backgroundColor: 'green'
+		},
+		content: {
+			backgroundColor: 'blue'
+		}
+	}));

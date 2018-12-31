@@ -552,3 +552,19 @@ test('throws on unexpected content borderColor', t => {
 test('throws on unexpected content backgroundColor', t => {
 	t.throws(() => m('foo', 'foo', {content: {backgroundColor: 'dark-yellow'}}), /backgroundColor/);
 });
+
+test('borderStyle option `none`', t => {
+	compare(t, m('foo', 'foo', {borderStyle: 'none'}), `
+foo
+foo
+	`);
+});
+
+test('borderStyle option `blank`', t => {
+	compare(t, m('foo', 'foo', {borderStyle: 'blank'}), `
+     
+ foo 
+ foo 
+     
+	`);
+});
