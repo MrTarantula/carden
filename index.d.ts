@@ -157,7 +157,7 @@ export interface CardenOptions extends Options {
 /**
  * Creates a card in the terminal.
  *
- * @param headerText - The text inside the carde header.
+ * @param headerText - The text inside the card header.
  * @param text - The text inside the card body.
  * @returns The card.
  */

@@ -114,7 +114,7 @@ dudes in bow ties.`), {
 
 ## Borders
 
-Borders are the same as [sindresorhus/cli-boxes], with two additions (subtractions?): 
+Borders are the same as [sindresorhus/cli-boxes](https://github.com/sindresorhus/cli-boxes), with two additions (subtractions?):
 
 * `blank` - replaces border characters with spaces, so the card lines up with cards that have borders
 
