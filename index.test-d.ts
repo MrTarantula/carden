@@ -1,5 +1,5 @@
 import {expectType} from 'tsd-check';
-import boxen, {Spacing, BorderStyle, CustomBorderStyle} from '.';
+import carden, {Spacing, BorderStyle, CustomBorderStyle} from '.';
 
 const border: CustomBorderStyle = {
 	topLeft: ' ',
@@ -17,17 +17,45 @@ const spacing: Spacing = {
 	left: 0
 };
 
-expectType<string>(boxen('unicorns'));
-expectType<string>(boxen('unicorns', {borderColor: 'green'}));
-expectType<string>(boxen('unicorns', {borderColor: '#ff0000'}));
-expectType<string>(boxen('unicorns', {borderStyle: BorderStyle.Double}));
-expectType<string>(boxen('unicorns', {borderStyle: border}));
-expectType<string>(boxen('unicorns', {dimBorder: true}));
-expectType<string>(boxen('unicorns', {padding: 3}));
-expectType<string>(boxen('unicorns', {padding: spacing}));
-expectType<string>(boxen('unicorns', {margin: 3}));
-expectType<string>(boxen('unicorns', {margin: spacing}));
-expectType<string>(boxen('unicorns', {float: 'center'}));
-expectType<string>(boxen('unicorns', {backgroundColor: 'green'}));
-expectType<string>(boxen('unicorns', {backgroundColor: '#ff0000'}));
-expectType<string>(boxen('unicorns', {align: 'right'}));
+expectType<string>(carden('unicorns', 'are awesome'));
+expectType<string>(carden('unicorns', 'are awesome', {borderColor: 'green'}));
+expectType<string>(carden('unicorns', 'are awesome', {borderColor: '#ff0000'}));
+expectType<string>(carden('unicorns', 'are awesome', {borderStyle: BorderStyle.Double}));
+expectType<string>(carden('unicorns', 'are awesome', {borderStyle: border}));
+expectType<string>(carden('unicorns', 'are awesome', {dimBorder: true}));
+expectType<string>(carden('unicorns', 'are awesome', {padding: 3}));
+expectType<string>(carden('unicorns', 'are awesome', {padding: spacing}));
+expectType<string>(carden('unicorns', 'are awesome', {margin: 3}));
+expectType<string>(carden('unicorns', 'are awesome', {margin: spacing}));
+expectType<string>(carden('unicorns', 'are awesome', {float: 'center'}));
+expectType<string>(carden('unicorns', 'are awesome', {backgroundColor: 'green'}));
+expectType<string>(carden('unicorns', 'are awesome', {backgroundColor: '#ff0000'}));
+expectType<string>(carden('unicorns', 'are awesome', {align: 'right'}));
+
+expectType<string>(carden('unicorns', 'are awesome', {header: {borderColor: 'green'}}));
+expectType<string>(carden('unicorns', 'are awesome', {header: {borderColor: '#ff0000'}}));
+expectType<string>(carden('unicorns', 'are awesome', {header: {borderStyle: BorderStyle.Double}}));
+expectType<string>(carden('unicorns', 'are awesome', {header: {borderStyle: border}}));
+expectType<string>(carden('unicorns', 'are awesome', {header: {dimBorder: true}}));
+expectType<string>(carden('unicorns', 'are awesome', {header: {padding: 3}}));
+expectType<string>(carden('unicorns', 'are awesome', {header: {padding: spacing}}));
+expectType<string>(carden('unicorns', 'are awesome', {header: {margin: 3}}));
+expectType<string>(carden('unicorns', 'are awesome', {header: {margin: spacing}}));
+expectType<string>(carden('unicorns', 'are awesome', {header: {float: 'center'}}));
+expectType<string>(carden('unicorns', 'are awesome', {header: {backgroundColor: 'green'}}));
+expectType<string>(carden('unicorns', 'are awesome', {header: {backgroundColor: '#ff0000'}}));
+expectType<string>(carden('unicorns', 'are awesome', {header: {align: 'right'}}));
+
+expectType<string>(carden('unicorns', 'are awesome', {content: {borderColor: 'green'}}));
+expectType<string>(carden('unicorns', 'are awesome', {content: {borderColor: '#ff0000'}}));
+expectType<string>(carden('unicorns', 'are awesome', {content: {borderStyle: BorderStyle.Double}}));
+expectType<string>(carden('unicorns', 'are awesome', {content: {borderStyle: border}}));
+expectType<string>(carden('unicorns', 'are awesome', {content: {dimBorder: true}}));
+expectType<string>(carden('unicorns', 'are awesome', {content: {padding: 3}}));
+expectType<string>(carden('unicorns', 'are awesome', {content: {padding: spacing}}));
+expectType<string>(carden('unicorns', 'are awesome', {content: {margin: 3}}));
+expectType<string>(carden('unicorns', 'are awesome', {content: {margin: spacing}}));
+expectType<string>(carden('unicorns', 'are awesome', {content: {float: 'center'}}));
+expectType<string>(carden('unicorns', 'are awesome', {content: {backgroundColor: 'green'}}));
+expectType<string>(carden('unicorns', 'are awesome', {content: {backgroundColor: '#ff0000'}}));
+expectType<string>(carden('unicorns', 'are awesome', {content: {align: 'right'}}));

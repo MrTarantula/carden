@@ -140,9 +140,25 @@ export interface Options {
 }
 
 /**
- * Creates a box in the terminal.
- *
- * @param text - The text inside the box.
- * @returns The box.
+ * Options for entire card.
  */
-export default function boxen(text: string, options?: Options): string;
+export interface CardenOptions extends Options {
+	/**
+	 * Options for card header only.
+	 */
+	header?: Options;
+
+	/**
+	 * Options for card content only.
+	 */
+	content?: Options;
+}
+
+/**
+ * Creates a card in the terminal.
+ *
+ * @param headerText - The text inside the carde header.
+ * @param text - The text inside the card body.
+ * @returns The card.
+ */
+export default function carden(headerText: string, text: string, options?: CardenOptions): string;
