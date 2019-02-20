@@ -83,7 +83,7 @@ const isColorValid = color => typeof color === 'string' && ((chalk[color]) || is
 const getColorFn = color => isHex(color) ? chalk.hex(color) : chalk[color];
 const getBGColorFn = color => isHex(color) ? chalk.bgHex(color) : chalk[camelCase(['bg', color])];
 
-const carden = (text, opts) => {
+const carden = (headerText, text, opts) => {
 	opts = Object.assign({
 		padding: 0,
 		borderStyle: 'single',

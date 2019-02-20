@@ -554,17 +554,9 @@ test('throws on unexpected content backgroundColor', t => {
 });
 
 test('borderStyle option `none`', t => {
-	compare(t, carden('foo', 'foo', {borderStyle: 'none'}), `
-foo
-foo
-	`);
+	compare(t, carden('foo', 'foo', {borderStyle: 'none'}), '\nfoo\nfoo');
 });
 
 test('borderStyle option `blank`', t => {
-	compare(t, carden('foo', 'foo', {borderStyle: 'blank'}), `
-
- foo
- foo
-
-	`);
+	compare(t, carden('foo', 'foo', {borderStyle: 'blank'}), '\nfoo \n foo');
 });
