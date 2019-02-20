@@ -83,7 +83,7 @@ const isColorValid = color => typeof color === 'string' && ((chalk[color]) || is
 const getColorFn = color => isHex(color) ? chalk.hex(color) : chalk[color];
 const getBGColorFn = color => isHex(color) ? chalk.bgHex(color) : chalk[camelCase(['bg', color])];
 
-module.exports = (headerText, text, opts) => {
+const carden = (text, opts) => {
 	opts = Object.assign({
 		padding: 0,
 		borderStyle: 'single',
@@ -244,5 +244,8 @@ module.exports = (headerText, text, opts) => {
 
 	return top + NL + headerMiddle + NL + middle + NL + bottom;
 };
+
+module.exports = carden;
+module.exports.default = carden;
 
 module.exports._borderStyles = cliBoxes;
