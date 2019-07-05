@@ -43,7 +43,7 @@ const getBorderChars = borderStyle => {
 	let chararacters;
 
 	if (borderStyle === 'none') {
-		chars = {
+		chararacters = {
 			topLeft: '',
 			topRight: '',
 			bottomLeft: '',
@@ -52,7 +52,7 @@ const getBorderChars = borderStyle => {
 			vertical: ''
 		};
 	} else if (borderStyle === 'blank') {
-		chars = {
+		chararacters = {
 			topLeft: ' ',
 			topRight: ' ',
 			bottomLeft: ' ',
@@ -61,7 +61,7 @@ const getBorderChars = borderStyle => {
 			vertical: ' '
 		};
 	} else if (typeof borderStyle === 'string') {
-		chars = cliBoxes[borderStyle];
+		chararacters = cliBoxes[borderStyle];
 
 		if (!chararacters) {
 			throw new TypeError(`Invalid border style: ${borderStyle}`);
@@ -102,92 +102,92 @@ module.exports = (headerText, text, options) => {
 		throw new Error(`${options.backgroundColor} is not a valid backgroundColor`);
 	}
 
-	if (opts.header && opts.header.borderColor && !isColorValid(opts.header.borderColor)) {
-		throw new Error(`${opts.header.borderColor} is not a valid borderColor`);
+	if (options.header && options.header.borderColor && !isColorValid(options.header.borderColor)) {
+		throw new Error(`${options.header.borderColor} is not a valid borderColor`);
 	}
 
-	if (opts.content && opts.content.borderColor && !isColorValid(opts.content.borderColor)) {
-		throw new Error(`${opts.content.borderColor} is not a valid borderColor`);
+	if (options.content && options.content.borderColor && !isColorValid(options.content.borderColor)) {
+		throw new Error(`${options.content.borderColor} is not a valid borderColor`);
 	}
 
-	if (opts.header && opts.header.backgroundColor && !isColorValid(opts.header.backgroundColor)) {
-		throw new Error(`${opts.header.backgroundColor} is not a valid backgroundColor`);
+	if (options.header && options.header.backgroundColor && !isColorValid(options.header.backgroundColor)) {
+		throw new Error(`${options.header.backgroundColor} is not a valid backgroundColor`);
 	}
 
-	if (opts.content && opts.content.backgroundColor && !isColorValid(opts.content.backgroundColor)) {
-		throw new Error(`${opts.content.backgroundColor} is not a valid backgroundColor`);
+	if (options.content && options.content.backgroundColor && !isColorValid(options.content.backgroundColor)) {
+		throw new Error(`${options.content.backgroundColor} is not a valid backgroundColor`);
 	}
 
-	const margin = getObject(opts.margin);
-	const contentChars = getBorderChars(opts.content ? opts.content.borderStyle || opts.borderStyle : opts.borderStyle);
-	const contentPadding = getObject(opts.content ? opts.content.padding || opts.padding : opts.padding);
-	const headerChars = getBorderChars(opts.header ? opts.header.borderStyle || opts.borderStyle : opts.borderStyle);
-	const headerPadding = getObject(opts.header ? opts.header.padding || opts.padding : opts.padding);
+	const margin = getObject(options.margin);
+	const contentChars = getBorderChars(options.content ? options.content.borderStyle || options.borderStyle : options.borderStyle);
+	const contentPadding = getObject(options.content ? options.content.padding || options.padding : options.padding);
+	const headerChars = getBorderChars(options.header ? options.header.borderStyle || options.borderStyle : options.borderStyle);
+	const headerPadding = getObject(options.header ? options.header.padding || options.padding : options.padding);
 
 	const colorizeHeaderBorder = x => {
 		let ret;
-		if (opts.header && opts.header.borderColor) {
-			ret = getColorFn(opts.header.borderColor)(x);
-		} else if (opts.borderColor) {
-			ret = getColorFn(opts.borderColor)(x);
+		if (options.header && options.header.borderColor) {
+			ret = getColorFn(options.header.borderColor)(x);
+		} else if (options.borderColor) {
+			ret = getColorFn(options.borderColor)(x);
 		} else {
 			ret = x;
 		}
 
-		return opts.header ? opts.header.dimBorder ? chalk.dim(ret) : ret : opts.dimBorder ? chalk.dim(ret) : ret;
+		return options.header ? options.header.dimBorder ? chalk.dim(ret) : ret : options.dimBorder ? chalk.dim(ret) : ret;
 	};
 
 	const colorizeBorder = x => {
 		let ret;
-		if (opts.content && opts.content.borderColor) {
-			ret = getColorFn(opts.content.borderColor)(x);
-		} else if (opts.borderColor) {
-			ret = getColorFn(opts.borderColor)(x);
+		if (options.content && options.content.borderColor) {
+			ret = getColorFn(options.content.borderColor)(x);
+		} else if (options.borderColor) {
+			ret = getColorFn(options.borderColor)(x);
 		} else {
 			ret = x;
 		}
 
-		return opts.content ? opts.content.dimBorder ? chalk.dim(ret) : ret : opts.dimBorder ? chalk.dim(ret) : ret;
+		return options.content ? options.content.dimBorder ? chalk.dim(ret) : ret : options.dimBorder ? chalk.dim(ret) : ret;
 	};
 
 	const colorizeHeader = x => {
-		if (opts.header && opts.header.backgroundColor) {
-			return getBGColorFn(opts.header.backgroundColor)(x);
+		if (options.header && options.header.backgroundColor) {
+			return getBGColorFn(options.header.backgroundColor)(x);
 		}
 
-		if (opts.backgroundColor) {
-			return getBGColorFn(opts.backgroundColor)(x);
+		if (options.backgroundColor) {
+			return getBGColorFn(options.backgroundColor)(x);
 		}
 
 		return x;
 	};
 
 	const colorizeContent = x => {
-		if (opts.content && opts.content.backgroundColor) {
-			return getBGColorFn(opts.content.backgroundColor)(x);
+		if (options.content && options.content.backgroundColor) {
+			return getBGColorFn(options.content.backgroundColor)(x);
 		}
 
-		if (opts.backgroundColor) {
-			return getBGColorFn(opts.backgroundColor)(x);
+		if (options.backgroundColor) {
+			return getBGColorFn(options.backgroundColor)(x);
 		}
 
 		return x;
 	};
 
 	let headerAlign;
-	if (opts.header && opts.header.align) {
-		headerAlign = opts.header.align;
+	if (options.header && options.header.align) {
+		headerAlign = options.header.align;
 	} else {
-		headerAlign = opts.align;
+		headerAlign = options.align;
 	}
 
 	headerText = ansiAlign(headerText, {align: headerAlign});
 
 	let contentAlign;
-	if (opts.content && opts.content.align) {
-		contentAlign = opts.content.align;
+	if (options.content && options.content.align) {
+		contentAlign = options.content.align;
 	} else {
-		contentAlign = opts.align;
+		contentAlign = options.align;
 	}
 
 	text = ansiAlign(text, {align: contentAlign});
@@ -221,10 +221,10 @@ module.exports = (headerText, text, options) => {
 
 	let marginLeft = PAD.repeat(margin.left);
 
-	if (opts.float === 'center') {
+	if (options.float === 'center') {
 		const padWidth = Math.max((columns - widestWidth) / 2, 0);
 		marginLeft = PAD.repeat(padWidth);
-	} else if (opts.float === 'right') {
+	} else if (options.float === 'right') {
 		const padWidth = Math.max(columns - widestWidth - margin.right - 2, 0);
 		marginLeft = PAD.repeat(padWidth);
 	}

@@ -19,9 +19,7 @@ test('creates a box', t => {
 });
 
 test('padding option', t => {
-	compare(t, carden('foo', 'foo', {
-		padding: 2
-	}), `
+	compare(t, carden('foo', 'foo', {padding: 2}), `
 ┌───────────────┐
 │               │
 │               │
@@ -243,7 +241,7 @@ test('throws on unexpected borderStyle as string', t => {
 
 test('throws on unexpected borderStyle as object', t => {
 	t.throws(() => {
-		boxen('foo', 'foo', {borderStyle: {shake: 'snake'}});
+		carden('foo', 'foo', {borderStyle: {shake: 'snake'}});
 	}, /border style/);
 
 	// Missing bottomRight
@@ -362,9 +360,7 @@ ${dimBottomBorder}
 test('header align option `center`', t => {
 	const beautifulColor = chalk.magenta('B E A U T I F U L');
 	compare(t, carden('foo\nmonkey', `Boxes are\n${beautifulColor}\nand beneficial too!`, {
-		header: {
-			align: 'center'
-		},
+		header: {align: 'center'},
 		padding: 1
 	}), `
 ┌─────────────────────────┐
@@ -383,10 +379,7 @@ test('header align option `center`', t => {
 
 test('header align option `right`', t => {
 	const beautifulColor = chalk.magenta('B E A U T I F U L');
-	compare(t, carden('foo\nmonkey', `Boxes are\n${beautifulColor}\nand beneficial too!`, {
-		header:
-		{align: 'right'}
-	}), `
+	compare(t, carden('foo\nmonkey', `Boxes are\n${beautifulColor}\nand beneficial too!`, {header: {align: 'right'}}), `
 ┌───────────────────┐
 │   foo             │
 │monkey             │
@@ -419,9 +412,7 @@ test('content align option `center`', t => {
 
 test('content align option `right`', t => {
 	const beautifulColor = chalk.magenta('B E A U T I F U L');
-	compare(t, carden('foo\nmonkey', `Boxes are\n${beautifulColor}\nand beneficial too!`, {
-		content: {align: 'right'}
-	}), `
+	compare(t, carden('foo\nmonkey', `Boxes are\n${beautifulColor}\nand beneficial too!`, {content: {align: 'right'}}), `
 ┌───────────────────┐
 │foo                │
 │monkey             │
@@ -434,9 +425,7 @@ test('content align option `right`', t => {
 
 test('header wider than content', t => {
 	const beautifulColor = chalk.magenta('B E A U T I F U L');
-	compare(t, carden(`Boxes are\n${beautifulColor}\nand beneficial too!`, 'foo\nmonkey', {
-		align: 'right'
-	}), `
+	compare(t, carden(`Boxes are\n${beautifulColor}\nand beneficial too!`, 'foo\nmonkey', {align: 'right'}), `
 ┌───────────────────┐
 │          Boxes are│
 │  ${beautifulColor}│
@@ -448,11 +437,7 @@ test('header wider than content', t => {
 });
 
 test('header backgroundColor option', t => {
-	const box = carden('foo', 'foo', {
-		header: {
-			backgroundColor: 'red'
-		}
-	});
+	const box = carden('foo', 'foo', {header: {backgroundColor: 'red'}});
 	const redAnsiOpen = '\u001B[41m';
 	const redAnsiClose = '\u001B[49m';
 	t.true(box.includes(redAnsiOpen));
@@ -507,11 +492,7 @@ test('throws on unexpected header backgroundColor', t => {
 });
 
 test('content backgroundColor option', t => {
-	const box = carden('foo', 'foo', {
-		content: {
-			backgroundColor: 'red'
-		}
-	});
+	const box = carden('foo', 'foo', {content: {backgroundColor: 'red'}});
 	const redAnsiOpen = '\u001B[41m';
 	const redAnsiClose = '\u001B[49m';
 	t.true(box.includes(redAnsiOpen));
@@ -519,11 +500,7 @@ test('content backgroundColor option', t => {
 });
 
 test('content backgroundColor hex', t => {
-	const box = carden('foo', 'foo', {
-		content: {
-			backgroundColor: '#FF0000'
-		}
-	});
+	const box = carden('foo', 'foo', {content: {backgroundColor: '#FF0000'}});
 	const rgbAnsiOpen = '\u001B[48;2;255;0;0m';
 	const colorAnsiClose = '\u001B[49m';
 	t.true(box.includes(rgbAnsiOpen));

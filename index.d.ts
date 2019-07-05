@@ -153,7 +153,7 @@ declare const enum BorderStyle {
 
 declare const carden: {
 	/**
-	Creates a box in the terminal.
+	Creates a card in the terminal.
 
 	@param header - The text inside the card header.
 	@param content - The text inside the card content area.
@@ -168,11 +168,19 @@ declare const carden: {
 	// │             │
 	// │   unicorn   │
 	// │             │
+	// │             │
+	// │   unicorn   │
+	// │             │
 	// └─────────────┘
+	//
+
 
 	console.log(carden('unicorn', 'unicorn', {padding: 1, margin: 1, borderStyle: 'double'}));
 	//
 	// ╔═════════════╗
+	// ║             ║
+	// ║   unicorn   ║
+	// ║             ║
 	// ║             ║
 	// ║   unicorn   ║
 	// ║             ║
