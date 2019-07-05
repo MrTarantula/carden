@@ -7,12 +7,42 @@
 ## Install
 
 ```bash
-npm install carden
+$ npm install carden
+```
+
+## Usage
+
+```js
+const carden = require('carden');
+
+console.log(carden('unicorn', 'unicorn', {padding: 1}));
+/*
+┌─────────────┐
+│             │
+│   unicorn   │
+│             │
+│             │
+│   unicorn   │
+│             │
+└─────────────┘
+*/
+
+console.log(carden('unicorn', 'unicorn', {padding: 1, margin: 1, borderStyle: 'double'}));
+/*
+   ╔═════════════╗
+   ║             ║
+   ║   unicorn   ║
+   ║             ║
+   ║             ║
+   ║   unicorn   ║
+   ║             ║
+   ╚═════════════╝
+*/
 ```
 
 ## API
 
-### carden(title, content, [options])
+### carden(header, content, [options])
 
 #### header
 
