@@ -1,164 +1,191 @@
-import cliBoxes, {BoxStyle} from 'cli-boxes';
+import { LiteralUnion } from 'type-fest';
+import cliBoxes, { BoxStyle } from 'cli-boxes';
 
-/**
- * Placeholder type allowing hex values in `borderColor` and `backgroundColor`.
- *
- * @todo Remove if [TypeScript issue](https://github.com/Microsoft/TypeScript/issues/29729) is resolved.
- */
-type HexColor = string & {hex?: any};
+declare namespace carden {
+	/**
+	Characters used for custom border.
 
-/**
- * Characters used for custom border.
- *
- * @example
- *
- * // affffb
- * // e    e
- * // dffffc
- *
- * const border: CustomBorderStyle = {
- * 	topLeft: 'a',
- * 	topRight: 'b',
- * 	bottomRight: 'c',
- * 	bottomLeft: 'd',
- * 	vertical: 'e',
- * 	horizontal: 'f'
- * };
- */
-export interface CustomBorderStyle extends BoxStyle {}
+	@example
+	```
+	// affffb
+	// e    e
+	// dffffc
 
-/**
- * Border styles from [`cli-boxes`](https://github.com/sindresorhus/cli-boxes).
- */
-export const enum BorderStyle {
+	const border: CustomBorderStyle = {
+		topLeft: 'a',
+		topRight: 'b',
+		bottomRight: 'c',
+		bottomLeft: 'd',
+		vertical: 'e',
+		horizontal: 'f'
+	};
+	```
+	*/
+	interface CustomBorderStyle extends BoxStyle { }
+
+	/**
+	Spacing used for `padding` and `margin`.
+	*/
+	interface Spacing {
+		readonly top: number;
+		readonly right: number;
+		readonly bottom: number;
+		readonly left: number;
+	}
+
+	interface Options {
+		/**
+		Color of the box border.
+		*/
+		readonly borderColor?: LiteralUnion<
+			| 'black'
+			| 'red'
+			| 'green'
+			| 'yellow'
+			| 'blue'
+			| 'magenta'
+			| 'cyan'
+			| 'white'
+			| 'gray'
+			| 'grey'
+			| 'blackBright'
+			| 'redBright'
+			| 'greenBright'
+			| 'yellowBright'
+			| 'blueBright'
+			| 'magentaBright'
+			| 'cyanBright'
+			| 'whiteBright',
+			string
+		>;
+
+		/**
+		Style of the box border.
+
+		@default BorderStyle.Single
+		*/
+		readonly borderStyle?: BorderStyle | CustomBorderStyle;
+
+		/**
+		Reduce opacity of the border.
+
+		@default false
+		*/
+		readonly dimBorder?: boolean;
+
+		/**
+		Space between the text and box border.
+
+		@default 0
+		*/
+		readonly padding?: number | Spacing;
+
+		/**
+		Space around the box.
+
+		@default 0
+		*/
+		readonly margin?: number | Spacing;
+
+		/**
+		Float the box on the available terminal screen space.
+
+		@default 'left'
+		*/
+		readonly float?: 'left' | 'right' | 'center';
+
+		/**
+		Color of the background.
+		*/
+		readonly backgroundColor?: LiteralUnion<
+			| 'black'
+			| 'red'
+			| 'green'
+			| 'yellow'
+			| 'blue'
+			| 'magenta'
+			| 'cyan'
+			| 'white'
+			| 'blackBright'
+			| 'redBright'
+			| 'greenBright'
+			| 'yellowBright'
+			| 'blueBright'
+			| 'magentaBright'
+			| 'cyanBright'
+			| 'whiteBright',
+			string
+		>;
+
+		/**
+		Align the text in the box based on the widest line.
+
+		@default 'left'
+		*/
+		readonly align?: 'left' | 'right' | 'center';
+	}
+
+	/**
+ 	* Options for entire card.
+ 	*/
+	export interface CardenOptions extends Options {
+		/**
+		 * Options for card header only.
+		 */
+		header?: Options;
+
+		/**
+		 * Options for card content only.
+		 */
+		content?: Options;
+	}
+}
+
+declare const enum BorderStyle {
 	Single = 'single',
 	Double = 'double',
 	Round = 'round',
+	Bold = 'bold',
 	SingleDouble = 'singleDouble',
 	DoubleSingle = 'doubleSingle',
 	Classic = 'classic'
 }
 
-/**
- * Spacing used for `padding` and `margin`.
- */
-export interface Spacing {
-	readonly top: number;
-	readonly right: number;
-	readonly bottom: number;
-	readonly left: number;
-}
-
-export interface Options {
+declare const carden: {
 	/**
-	 * Color of the box border.
-	 */
-	readonly borderColor?:
-		| 'black'
-		| 'red'
-		| 'green'
-		| 'yellow'
-		| 'blue'
-		| 'magenta'
-		| 'cyan'
-		| 'white'
-		| 'gray'
-		| 'grey'
-		| 'blackBright'
-		| 'redBright'
-		| 'greenBright'
-		| 'yellowBright'
-		| 'blueBright'
-		| 'magentaBright'
-		| 'cyanBright'
-		| 'whiteBright'
-		| HexColor;
+	Creates a box in the terminal.
+
+	@param header - The text inside the card header.
+	@param content - The text inside the card content area.
+	@returns The card.
+
+	@example
+	```
+	import carden = require('carden');
+
+	console.log(carden('unicorn', 'unicorn', {padding: 1}));
+	// ┌─────────────┐
+	// │             │
+	// │   unicorn   │
+	// │             │
+	// └─────────────┘
+
+	console.log(carden('unicorn', 'unicorn', {padding: 1, margin: 1, borderStyle: 'double'}));
+	//
+	// ╔═════════════╗
+	// ║             ║
+	// ║   unicorn   ║
+	// ║             ║
+	// ╚═════════════╝
+	//
+	```
+	*/
+	(header: string, content: string, options?: carden.CardenOptions): string;
 
 	/**
-	 * Style of the box border.
-	 *
-	 * @default BorderStyle.Single
-	 */
-	readonly borderStyle?: BorderStyle | CustomBorderStyle;
+	Border styles from [`cli-boxes`](https://github.com/sindresorhus/cli-boxes).
+	*/
+	BorderStyle: typeof BorderStyle;
+};
 
-	/**
-	 * Reduce opacity of the border.
-	 *
-	 * @default false
-	 */
-	readonly dimBorder?: boolean;
-
-	/**
-	 * Space between the text and box border.
-	 *
-	 * @default 0
-	 */
-	readonly padding?: number | Spacing;
-
-	/**
-	 * Space around the box.
-	 *
-	 * @default 0
-	 */
-	readonly margin?: number | Spacing;
-
-	/**
-	 * Float the box on the available terminal screen space.
-	 *
-	 * @default 'left'
-	 */
-	readonly float?: 'left' | 'right' | 'center';
-
-	/**
-	 * Color of the background.
-	 */
-	readonly backgroundColor?:
-		| 'black'
-		| 'red'
-		| 'green'
-		| 'yellow'
-		| 'blue'
-		| 'magenta'
-		| 'cyan'
-		| 'white'
-		| 'blackBright'
-		| 'redBright'
-		| 'greenBright'
-		| 'yellowBright'
-		| 'blueBright'
-		| 'magentaBright'
-		| 'cyanBright'
-		| 'whiteBright'
-		| HexColor;
-
-	/**
-	 * Align the text in the box based on the widest line.
-	 *
-	 * @default 'left'
-	 */
-	readonly align?: 'left' | 'right' | 'center';
-}
-
-/**
- * Options for entire card.
- */
-export interface CardenOptions extends Options {
-	/**
-	 * Options for card header only.
-	 */
-	header?: Options;
-
-	/**
-	 * Options for card content only.
-	 */
-	content?: Options;
-}
-
-/**
- * Creates a card in the terminal.
- *
- * @param headerText - The text inside the card header.
- * @param text - The text inside the card body.
- * @returns The card.
- */
-export default function carden(headerText: string, text: string, options?: CardenOptions): string;
+export = carden;

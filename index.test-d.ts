@@ -1,5 +1,6 @@
-import {expectType} from 'tsd-check';
-import carden, {Spacing, BorderStyle, CustomBorderStyle} from '.';
+import {expectType} from 'tsd';
+import carden = require('.');
+import {Spacing, BorderStyle, CustomBorderStyle} from '.';
 
 const border: CustomBorderStyle = {
 	topLeft: ' ',

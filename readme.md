@@ -7,7 +7,7 @@
 ## Install
 
 ```bash
-npm install carden
+$ npm install carden
 ```
 
 ## API
