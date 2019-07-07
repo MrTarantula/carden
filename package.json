@@ -1,9 +1,15 @@
 {
-	"name": "carden",
+	"name": "@mrtarantula/carden",
 	"version": "4.0.0",
 	"description": "Create cards in the terminal",
 	"license": "MIT",
-	"repository": "mrtarantula/carden",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/mrtarantula/carden.git"
+	},
+	"publishConfig": {
+		"registry": "https://npm.pkg.github.com/"
+	},
 	"author": {
 		"name": "Ryan Tauriainen",
 		"email": "ryan@ryant.io",
